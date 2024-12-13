@@ -1,3 +1,4 @@
+
 create database FurEverHomes_db;
 USE FurEverHomes_db;
 CREATE TABLE Animal (
@@ -62,9 +63,9 @@ VALUES
 (1, 'Bruno', 'DOG', '6 years 3 months', 'MALE', 'Labrador', 'Skin allergies', 'AVAILABLE', 'Friendly and energetic, loves playing fetch.', 'images/bruno.jpg'),
 (2, 'Ace', 'DOG', '1 year 8 months', 'MALE', 'Indie', NULL, 'ADOPTED', 'Playful and affectionate, good with kids.', 'images/ace.jpg'),
 (3, 'Sheru', 'DOG', '5 years 1 month', 'MALE', 'Rottweiler', NULL, 'AVAILABLE', 'Protective and loyal, perfect guard dog.', 'images/sheru.jpeg'),
-(4, 'Scooby', 'DOG', '4 years', 'MALE', 'Indie', NULL, 'AVAILABLE', 'Calm, enjoys quiet walks and lounging.', 'images/scooby.jpg'),
+(4, 'Scooby', 'DOG', '4 years', 'MALE', 'Indie', NULL, 'AVAILABLE', 'Calm, enjoys quiet walks and lounging.', 'images/coco.jpg'),
 (5, 'Maximus', 'DOG', '8 months', 'MALE', 'Dachshund', NULL, 'AVAILABLE', 'Very playful, loves company and long walks.', 'images/maximus.jpg'),
-(6, 'Coco', 'DOG', '6 years', 'MALE', 'Indie', 'Arthritis', 'AVAILABLE', 'Cute and friendly, loves to be pampered.', 'images/coco.jpg'),
+(6, 'Coco', 'DOG', '6 years', 'MALE', 'Indie', 'Arthritis', 'AVAILABLE', 'Cute and friendly, loves to be pampered.', 'images/newdog.jpg'),
 (7, 'Cherry', 'DOG', '2 years 5 months', 'FEMALE', 'Pomeranian', NULL, 'ADOPTED', 'Intelligent and energetic, needs active play.', 'images/cherry.jpeg'),
 (8, 'Cookie', 'DOG', '4 years 7 months', 'FEMALE', 'Indie', 'Mild joint pain', 'ADOPTED', 'Loyal and protective, requires daily exercise.', 'images/cookie.jpg'),
 (9, 'Bella', 'DOG', '5 years', 'FEMALE', 'Labrador', NULL, 'AVAILABLE', 'Friendly, loves water, good with children.', 'images/bella.jpeg'),
@@ -109,12 +110,12 @@ VALUES
 
 INSERT INTO Animal (Animal_ID, Name, Animal_Type, Age, Gender, Breed, Health_Issues, Adoption_Status, Description, Image_Path)
 VALUES
-(41, 'Buddy', 'DOG', '2 years', 'MALE', 'Labrador', 'Hip dysplasia', 'AVAILABLE', 'Gentle and loves playing in the park.', 'images/bella.jpeg'),
+(41, 'Buddy', 'DOG', '2 years', 'MALE', 'Labrador', 'Hip dysplasia', 'AVAILABLE', 'Gentle and loves playing in the park.', 'images/ace.jpg'),
 (42, 'Duke', 'DOG', '1 year 6 months', 'MALE', 'Rottweiler', NULL, 'AVAILABLE', 'Protective and highly loyal, a perfect guard dog.', 'images/sheru.jpeg'),
-(43, 'Bella', 'DOG', '4 years', 'FEMALE', 'Indie', NULL, 'ADOPTED', 'Friendly and calm, enjoys quiet walks.', 'images/scooby.jpg'),
+(43, 'Barney', 'DOG', '4 years', 'FEMALE', 'Indie', NULL, 'ADOPTED', 'Friendly and calm, enjoys quiet walks.', 'images/scooby.jpg'),
 (44, 'Lola', 'DOG', '1 year 3 months', 'FEMALE', 'Pomeranian', 'Prone to skin allergies', 'AVAILABLE', 'Lively and loves to cuddle.', 'images/tuffy.jpeg'),
 (45, 'Jack', 'DOG', '3 years', 'MALE', 'Labrador', NULL, 'AVAILABLE', 'Energetic and great with kids.', 'images/bruno.jpg'),
-(46, 'Zoe', 'DOG', '2 years 7 months', 'FEMALE', 'Indie', 'Mild joint stiffness', 'AVAILABLE', 'Quiet and affectionate, loves lounging around.', 'images/ace.jpg'),
+(46, 'Zoe', 'DOG', '2 years 7 months', 'FEMALE', 'Indie', 'Mild joint stiffness', 'AVAILABLE', 'Quiet and affectionate, loves lounging around.', 'images/bella.jpeg'),
 (47, 'Max', 'DOG', '6 months', 'MALE', 'Dachshund', NULL, 'ADOPTED', 'Tiny and playful, enjoys long walks.', 'images/maximus.jpg'),
 (48, 'Daisy', 'DOG', '5 years', 'FEMALE', 'Pomeranian', NULL, 'AVAILABLE', 'Charming and active, loves attention.', 'images/cherry.jpeg'),
 (49, 'Charlie', 'DOG', '1 year', 'MALE', 'Labrador', 'Sensitive stomach', 'ADOPTED', 'Friendly and social, loves outdoor activities.', 'images/bruno.jpg'),
@@ -150,17 +151,7 @@ VALUES
 (9, 'Ava Scott', 'ava.scott@example.com', '1987654321', 'avaSecure'),
 (10, 'Jack Hayes', 'jack.hayes@example.com', '9876501234', 'jack456');
 
-INSERT INTO Donations (Donation_ID, User_ID, Name, Amount, Payment_Method, Donation_Date)
-VALUES
-(1, 3, 'Mia Reed', 150.00, 'CREDIT CARD', '2024-12-05 10:30:00'),
-(2, 3, 'Mia Reed', 75.50, 'DEBIT CARD', '2024-12-06 14:45:00'),
-(3, 5, 'Emma Hill', 200.50, 'DEBIT CARD', '2024-12-06 15:45:00'),
-(4, 6, 'Ethan Fox', 300.00, 'CREDIT CARD', '2024-12-06 18:10:00'),
-(5, 6, 'Ethan Fox', 120.75, 'UPI', '2024-12-07 09:30:00'),
-(6, 7, 'Sophia Dean', 250.00, 'UPI', '2024-12-07 09:30:00'),
-(7, 8, 'Logan Price', 180.50, 'NET BANKING', '2024-12-06 16:00:00'),
-(8, 9, 'Ava Scott', 500.00, 'CREDIT CARD', '2024-12-07 11:15:00'),
-(9, 10, 'Jack Hayes', 220.00, 'UPI', '2024-12-07 13:45:00');
+
 
 ALTER TABLE Adoption_Application
 DROP COLUMN Status;
@@ -221,3 +212,29 @@ WHERE User_ID = 9;  -- Ava Scott
 Insert into admin values(1,'Kevin','kev@gmail.com','qwerty1234'),
 (2,'Simran','simran@gmail.com','1234qwerty'),
 (3,'Shradha','shradha@gmail.com','asdfgh7890');
+
+ALTER TABLE donations
+ADD COLUMN phone_number VARCHAR(15),
+ADD COLUMN email VARCHAR(255);
+
+
+INSERT INTO Donations (Donation_ID, User_ID, Name, Amount, Payment_Method, Donation_Date, phone_number, email)
+VALUES 
+(1, 1, 'Mia Reed', 500, 'CREDIT CARD', '2024-12-10', '9876543210', 'mia.reed@gmail.com'),
+(2, 2, 'Emma Hill', 1200, 'NET BANKING', '2024-12-09', '9123456789', 'emma.hill@gmail.com'),
+(3, 3, 'Ethan Fox', 250, 'DEBIT CARD', '2024-12-08', '9156782345', 'ethan.fox@gmail.com'),
+(4, 4, 'Sophia Dean', 750, 'UPI', '2024-12-07', '9991234567', 'sophia.dean@gmail.com'),
+(5, 5, 'Logan Price', 600, 'CREDIT CARD', '2024-12-06', '9836541234', 'logan.price@gmail.com'),
+(6, 6, 'Ava Scott', 900, 'DEBIT CARD', '2024-12-05', '9738901234', 'ava.scott@gmail.com'),
+(7, 7, 'Jack Hayes', 1500, 'UPI', '2024-12-04', '9812345678', 'jack.hayes@gmail.com'),
+(8, 8, 'Ria Singh', 450, 'CREDIT CARD', '2024-12-03', '9871234567', 'ria.singh@gmail.com'),
+(9, 9, 'Krish Patel', 1100, 'NET BANKING', '2024-12-02', '9665332211', 'krish.patel@gmail.com'),
+(10, 10, 'Mia Reed', 800, 'UPI', '2024-12-01', '9876543210', 'mia.reed@gmail.com'),
+(11, 1, 'Emma Hill', 550, 'NET BANKING', '2024-11-30', '9123456789', 'emma.hill@gmail.com'),
+(12, 2, 'Ethan Fox', 1300, 'DEBIT CARD', '2024-11-29', '9156782345', 'ethan.fox@gmail.com'),
+(13, 3, 'Sophia Dean', 300, 'CREDIT CARD', '2024-11-28', '9991234567', 'sophia.dean@gmail.com'),
+(14, 4, 'Logan Price', 950, 'DEBIT CARD', '2024-11-27', '9836541234', 'logan.price@gmail.com'),
+(15, 5, 'Ava Scott', 1100, 'UPI', '2024-11-26', '9738901234', 'ava.scott@gmail.com');
+
+
+

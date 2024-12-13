@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Pet Sitting - Free Bootstrap 4 Template by Colorlib</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    
+    <!-- Fonts and Icons -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/animate.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/owl.theme.default.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/magnific-popup.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-datepicker.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.timepicker.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/flaticon.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  </head>
+  <body>
+
+    <div class="wrap">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6 d-flex align-items-center">
+						<p class="mb-0 phone pl-md-2">
+							<a href="#" class="mr-2"><span class="fa fa-phone mr-1"></span> +91 7975308401</a> 
+							<a href="#"><span class="fa fa-paper-plane mr-1"></span> purrfecthomes@gmail.com</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+	    <div class="container">
+	    	<a class="navbar-brand" href="index.html"><span><img src="{{ url_for('static', filename='images/logo.png') }}" width="200px" height="200px" width="200px" height="200px"></span></a>
+	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="fa fa-bars"></span> Menu
+	      </button>
+	      <div class="collapse navbar-collapse" id="ftco-nav">
+	        <ul class="navbar-nav ml-auto">
+	        	  <li class="nav-item"><a href="{{ url_for('home') }}" class="nav-link">Home</a></li>
+            	<li class="nav-item"><a href="{{ url_for('about') }}" class="nav-link">About</a></li>
+            	<li class="nav-item"><a href="{{ url_for('adoption') }}" class="nav-link">Adopt</a></li>
+            	<li class="nav-item"><a href="{{ url_for('volunteer') }}" class="nav-link">Volunteer</a></li>
+            	<li class="nav-item active"><a href="{{ url_for('donation') }}" class="nav-link">Donate</a></li>
+            	<li class="nav-item"><a href="{{ url_for('contact') }}" class="nav-link">Contact</a></li>
+            	<li class="nav-item"><a href="{{ url_for('login') }}" class="nav-link">Login</a></li>
+	        </ul>
+	      </div>
+	    </div>
+	  </nav>
+    <!-- END nav -->
+    <section class="hero-wrap hero-wrap-2" style="background-image: url('/static/images/bg_2.jpg');" data-stellar-background-ratio="0.5">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text align-items-end">
+          <div class="col-md-9 ftco-animate pb-5">
+          	<p class="breadcrumbs mb-2"><span class="mr-2"><a href="index.html">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Donate <i class="ion-ios-arrow-forward"></i></span></p>
+            <h1 class="mb-0 bread">Donate</h1>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ftco-section bg-light">
+    	<div class="container">
+    		<div class="row justify-content-center pb-5 mb-3">
+          <div class="col-md-7 heading-section text-center ftco-animate">
+            <h2>Be the Hero They Deserve:</h2><h3>Donate Today !</h3>
+          </div>
+        </div>
+        <h5><center>Every animal deserves love, care, and a safe place to call home, but countless stray and abandoned pets are left to fend for themselves, hungry and scared. Your donation isn’t just money—it’s hope for a better life. It’s the food that fills an empty stomach, the medicine that eases pain, and the shelter that offers warmth on a cold night. By giving, you’re becoming their hero, their second chance at life. Together, we can save innocent lives and create a kinder, more compassionate world. Every little bit helps; every little bit heals. Let’s make a difference—because they’re worth it.</center></h5>
+    	</div>
+    </section>
+
+    <section class="ftco-appointment ftco-section ftco-no-pt ftco-no-pb img" style="background-image: url('/static/images/bg_3.jpg');">  
+			<div class="overlay"></div>
+    	<div class="container">
+    		<div class="row d-md-flex justify-content-end">
+    			<div class="col-md-12 col-lg-6 half p-3 py-5 pl-lg-5 ftco-animate">
+    				<h2 class="mb-4">Donate for the cause here !</h2>
+    				<form action="/donation" method="POST" class="donation-form" >
+                        <div class="row">
+                            <!--Name-->
+                            <span style="color: cornsilk;">Full Name:</span>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" step="0.01" class="form-control" name="donorname" placeholder="John Smith" required>
+                                </div>
+                            </div>
+                            <!--Phone Number-->
+                            <span style="color: cornsilk;">Phone Number:</span>
+                            <div class="col-md-12">
+                              <div class="form-group">
+                                  <input type="tel" class="form-control" name="donorphone" id="phone" placeholder="123-456-7890" required>
+                              </div>
+                            </div>
+
+                            <!--Email-->
+                            <span style="color: cornsilk;">Email:</span>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="email" class="form-control" name="donoremail" id="mail" placeholder="example@example.com" required>
+                                </div>
+                            </div>
+
+                            <!-- Amount -->
+                            <span style="color: cornsilk;">Amount:</span>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="number" step="0.01" class="form-control" name="amount" placeholder="Amount (e.g., 200)" required>
+                                </div>
+                            </div>
+                    
+                            <!-- Payment Method -->
+                            <span style="color: cornsilk;">Select your payment method:</span>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="form-field">
+                                        <div class="select-wrap">
+                                            <select name="payment_method" id="payment_method" class="form-control" required>
+                                                <option value="">Select Payment Method</option>
+                                                <option value="CREDIT CARD">Credit Card</option>
+                                                <option value="DEBIT CARD">Debit Card</option>
+                                                <option value="UPI">UPI</option>
+                                                <option value="NET BANKING">Net Banking</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Submit Button -->
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="submit" value="Submit" class="btn btn-primary py-3 px-4" onclick="return validateForm();">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    
+    			</div>
+    		</div>
+    	</div>
+    </section>
+
+    {% if success %}
+<script>
+    alert("Form submitted successfully!");
+</script>
+{% endif %}
+      
+<script>
+      function validateForm() {
+        // Get the values of phone number and email inputs
+        const phoneInput = document.getElementById("phone").value;
+        const emailInput = document.getElementById("mail").value;
+    
+        // Regular expressions for validation
+        const phoneRegex = /^\+?[1-9]\d{1,14}$/; // E.164 format for phone numbers (e.g., +1234567890)
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Basic email validation
+    
+        // Validate phone number
+        if (!phoneRegex.test(phoneInput)) {
+            alert("Please enter a valid phone number (e.g., +1234567890).");
+            return false;
+        }
+    
+        // Validate email
+        if (!emailRegex.test(emailInput)) {
+            alert("Please enter a valid email address.");
+            return false;
+        }
+    
+        // If both validations pass
+        return true;
+    }
+</script>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-lg-3 pl-lg-5 mb-4 mb-md-0">
+                    <h2 class="footer-heading">Quick Links</h2>
+                    <ul class="list-unstyled">
+                      <li><a href="{{ url_for('home') }}" class="py-2 d-block">Home</a></li>
+                      <li><a href="{{ url_for('about') }}" class="py-2 d-block">About</a></li>
+                      <li><a href="{{ url_for('adoption') }}" class="py-2 d-block">Adopt</a></li>
+                      <li><a href="{{ url_for('volunteer') }}" class="py-2 d-block">Volunteer</a></li>
+                      <li><a href="{{ url_for('donation') }}" class="py-2 d-block">Donate</a></li>
+                      <li><a href="{{ url_for('contact') }}" class="py-2 d-block">Contact</a></li>
+                      <li><a href="{{ url_for('login') }}" class="py-2 d-block">Login</a></li>
+        </ul>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4 mb-md-0">
+                    <h2 class="footer-heading">Have Questions?</h2>
+                    <div class="block-23 mb-3">
+          <ul>
+            <li><span class="icon fa fa-map"></span><span class="text">123, 4th Cross, 5th Main, Koramangala 1st Block, Bangalore, Karnataka - 560034</span></li>
+            <li><a href="#"><span class="icon fa fa-phone"></span><span class="text">+91 7975308401</span></a></li>
+            <li><a href="#"><span class="icon fa fa-paper-plane"></span><span class="text">purrfecthomes@gmail.com</span></a></li>
+          </ul>
+        </div>
+                </div>
+            </div>
+            <div class="row mt-5">
+      <div class="col-md-12 text-center">
+
+        <p class="copyright"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved </p>
+        </div>
+        </div>
+		</div>
+		</footer>
+
+    
+  
+
+  <!-- loader -->
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+
+  <!-- JavaScript Files -->
+  <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery-migrate-3.0.1.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery.easing.1.3.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery.waypoints.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery.stellar.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery.animateNumber.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/bootstrap-datepicker.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery.timepicker.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/owl.carousel.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery.magnific-popup.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/scrollax.min.js') }}"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script src="{{ url_for('static', filename='js/google-map.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+
+    
+  </body>
+</html>
