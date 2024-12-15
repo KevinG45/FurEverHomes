@@ -47,10 +47,36 @@ def adoption():
 def dogadoption():
     dbconn = mysql.connection
     cursor = dbconn.cursor()
-    cursor.execute("select Image_Path, Name, Age, Breed, Description from Animal where Animal_Type='Dog'")
-    results = cursor.fetchall()
-    print(results)
-    return render_template("dogadoption.html", doglist=results)
+
+    # Fetch distinct breeds
+    cursor.execute("SELECT DISTINCT Breed FROM Animal WHERE Animal_Type = 'Dog'")
+    breeds = cursor.fetchall()  # Returns a list of tuples [(breed1,), (breed2,)]
+    breed_list = [breed[0] for breed in breeds]  # Flatten to a list [breed1, breed2, ...]
+
+    # Get the selected breed from query parameters
+    selected_breed = request.args.get('breed')
+
+    if selected_breed:
+        # Filter dogs by selected breed
+        query = """
+        SELECT Image_Path, Name, Age, Breed, Description, Animal_ID 
+        FROM Animal 
+        WHERE Animal_Type = 'Dog' AND Breed = %s
+        """
+        cursor.execute(query, (selected_breed,))
+    else:
+        # Fetch all dogs if no breed is selected
+        query = """
+        SELECT Image_Path, Name, Age, Breed, Description, Animal_ID 
+        FROM Animal 
+        WHERE Animal_Type = 'Dog'
+        """
+        cursor.execute(query)
+
+    doglist = cursor.fetchall()  # Fetch the dogs based on the query
+    cursor.close()
+
+    return render_template("DogAdoption.html", doglist=doglist, breed_list=breed_list, selected_breed=selected_breed)
 
 @app.route("/catadoption")
 def catadoption():
@@ -94,17 +120,21 @@ def donation():
     return render_template("donation.html")
 
 
-@app.route("/dogadoptionform", methods=['GET', 'POST'])
+@app.route('/dogadoptionform', methods=['GET', 'POST'])
 def dogadoptionform():
-    
     dbconn = mysql.connection
     cursor = dbconn.cursor()
-    # Fetch list of dog names (or specific dog details based on selection)
-    cursor.execute("SELECT Name FROM Animal WHERE Animal_Type='DOG' ")  # Adjust query as needed
-    dogs = cursor.fetchall()  # Fetch all the dog records
-    # Remove the tuple structure and extract only the dog names
-    dog_names = [dog[0] for dog in dogs]
-    cursor.close()
+
+    # Get dog_id from query parameters
+    dog_id = request.args.get('dog_id')
+
+    # Fetch the specific dog's name
+    dog_name = None
+    if dog_id:
+        cursor.execute("SELECT Name FROM Animal WHERE Animal_ID = %s", (dog_id,))
+        dog = cursor.fetchone()
+        if dog:
+            dog_name = dog[0]  # Extract the dog's name
 
     if request.method == "POST":
         # Retrieve form data
@@ -116,26 +146,20 @@ def dogadoptionform():
         areason = request.form.get('reason')
 
         # Insert data into the database
-        dbconn = mysql.connection
-        cursor = dbconn.cursor()
         query = """
-        INSERT INTO dogadoptform(name, email, phone_number, pet_type, reason, address) 
+        INSERT INTO dogadoptform(name, email, phone_number, pet_type, reason, address)
         VALUES (%s, %s, %s, %s, %s, %s)
         """
         try:
             cursor.execute(query, (aname, aemail, aph, pet, areason, address))
             dbconn.commit()
-
-            # Render the form page with success feedback
-            return render_template("dogadoptionform.html", success=True, dogs=dog_names)
+            return render_template("DogAdoptionForm.html", success=True, dog_name=dog_name)
         except Exception as e:
             dbconn.rollback()
             print(f"Error: {e}")
-            # Render the form page with error feedback
-            return render_template("dogadoptionform.html", success=False, error="Failed to submit your application. Please try again later.")
+            return render_template("DogAdoptionForm.html", success=False, error="Failed to submit your application.", dog_name=dog_name)
 
-    # Render the form page for GET requests
-    return render_template("dogadoptionform.html", dogs=dog_names)
-
+    # Render the form page with the selected dog's name
+    return render_template('DogAdoptionForm.html', dog_name=dog_name)
      
 app.run(debug=True)
