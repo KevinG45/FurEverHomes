@@ -107,7 +107,7 @@ def dogadoptionform():
 def catadoption():
     dbconn = mysql.connection
     cursor = dbconn.cursor()
-    cursor.execute("select Image_Path, Name, Age, Breed, Description from Animal where Animal_Type='Cat'")
+    cursor.execute("select Image_Path, Name, Age, Breed, Description, Animal_ID FROM Animal WHERE Animal_Type='Cat'")
     results = cursor.fetchall()
     print(results)
     return render_template("CatAdoption.html", catlist=results)  # Ensure 'CatAdoption.html' exists in the 'templates' folder
@@ -118,12 +118,17 @@ def catadoption():
 def catadoptionform():
     dbconn = mysql.connection
     cursor = dbconn.cursor()
-    # Fetch list of cat names (or specific cat details based on selection)
-    cursor.execute("SELECT Name FROM Animal WHERE Animal_Type='CAT' ")  
-    cats = cursor.fetchall()  # Fetch all the cat records
-    # Remove the tuple structure and extract only the cat names
-    cat_names = [cat[0] for cat in cats]
-    cursor.close()
+
+    # Get cat_id from query parameters
+    cat_id = request.args.get('cat_id')
+
+    # Fetch the specific cat's name
+    cat_name = None
+    if cat_id:
+        cursor.execute("SELECT Name FROM Animal WHERE Animal_ID = %s", (cat_id,))
+        cat = cursor.fetchone()
+        if cat:
+            cat_name = cat[0]  # Extract the cat's name
 
     if request.method == "POST":
         # Retrieve form data
@@ -135,8 +140,6 @@ def catadoptionform():
         areason = request.form.get('reason')
 
         # Insert data into the database
-        dbconn = mysql.connection
-        cursor = dbconn.cursor()
         query = """
         INSERT INTO catadoptform(name, email, phone_number, pet_type, reason, address) 
         VALUES (%s, %s, %s, %s, %s, %s)
@@ -144,19 +147,14 @@ def catadoptionform():
         try:
             cursor.execute(query, (aname, aemail, aph, pet, areason, address))
             dbconn.commit()
-
-            # Render the form page with success feedback
-            return render_template("CatAdoptionForm.html", success=True, cats=cat_names)
+            return render_template("CatAdoptionForm.html", success=True, cat_name=cat_name)
         except Exception as e:
             dbconn.rollback()
             print(f"Error: {e}")
-            # Render the form page with error feedback
-            return render_template("CatAdoptionForm.html", success=False, error="Failed to submit your application. Please try again later.")
+            return render_template("CatAdoptionForm.html", success=False, error="Failed to submit your application.", cat_name=cat_name)
 
-    # Render the form page for GET requests
-
-
-    return render_template('CatAdoptionForm.html', cats=cat_names )  # Ensure 'CatAdoptionForm.html' exists in the 'templates' folder
+    # Render the form page with the selected cat's name
+    return render_template('CatAdoptionForm.html', cat_name=cat_name)
 
 @app.route("/hamsteradoption")
 def hamsteradoption():
