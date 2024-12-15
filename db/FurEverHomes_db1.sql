@@ -40,16 +40,16 @@ CREATE TABLE Donations (
 );
 CREATE TABLE Volunteers (
     Volunteer_ID INT PRIMARY KEY AUTO_INCREMENT,
-    User_ID INT NOT NULL,
     Name VARCHAR(255) NOT NULL,
     Email VARCHAR(255) NOT NULL UNIQUE,
     Phone_Number VARCHAR(20) NOT NULL UNIQUE,
     Age INT NOT NULL,
     Address VARCHAR(255) NOT NULL,
     Camp_Location ENUM('KORMANGALA', 'MARTHAHALLI', 'HOSA ROAD'),
-    Image_Path VARCHAR(255) DEFAULT 'images/default.jpg',
-    FOREIGN KEY (User_ID) REFERENCES User(User_ID)
+    Image_Path VARCHAR(255) DEFAULT 'images/default.jpg'
 );
+select* from Volunteers;
+
 CREATE TABLE Admin (
     Admin_ID INT PRIMARY KEY AUTO_INCREMENT,
     Name VARCHAR(255) NOT NULL,
@@ -72,10 +72,10 @@ VALUES
 
 INSERT INTO Animal (Animal_ID, Name, Animal_Type, Age, Gender, Breed, Health_Issues, Adoption_Status, Description, Image_Path)
 VALUES
-(11, 'Mishka', 'CAT', '3 months', 'FEMALE', 'Indie', NULL, 'AVAILABLE', 'Loves cuddles, purrs constantly when held.', 'images/cats2indianbreed.jpg'),
+(11, 'Mishka', 'CAT', '3 months', 'FEMALE', 'Indie', NULL, 'AVAILABLE', 'Loves cuddles and little treats, purrs constantly when held.', 'images/cats2indianbreed.jpg'),
 (12, 'Noir', 'CAT', '1 year', 'FEMALE', 'Bombay cat', NULL, 'ADOPTED', 'A sleek beauty with a gentle temperament, perfect for first-time owners.', 'images/cats2bombaycat.jpg'),
 (13, 'Oscar', 'CAT', '1 year 5 months', 'MALE', 'American Shorthair', 'Sensitive stomach requiring special diet.', 'AVAILABLE', 'A goofy and playful companion who loves belly rubs.', 'images/cats3americanshorthair.jpg'),
-(14, 'Fluffy', 'CAT', '1 year', 'MALE', 'Persian', NULL, 'AVAILABLE', 'Quiet and reserved, enjoys relaxing in cozy corners.', 'images/cats2persiancat.jpg'),
+(14, 'Fluffy', 'CAT', '1 year', 'MALE', 'Persian', NULL, 'AVAILABLE', 'introverted, Quiet and reserved, enjoys relaxing in cozy corners.', 'images/cats2persiancat.jpg'),
 (15, 'Max', 'CAT', '8 months', 'MALE', 'Indie', NULL, 'ADOPTED', 'Sociable and loves interacting with people and other cats.', 'images/cats3indianbreed.jpg'),
 (16, 'Ruby', 'CAT', '3 years', 'FEMALE', 'Indie', 'Mild joint stiffness that improves with regular exercise.', 'AVAILABLE', 'Playful and loves exploring small nooks. A bundle of energy with a curious mind.', 'images/cats8indianbreed.jpg'),
 (17, 'Snowy', 'CAT', '8 months', 'FEMALE', 'Persian', 'Prone to watery eyes and needs regular cleaning.', 'AVAILABLE', 'Beautiful and calm, adores grooming sessions and soft cushions.', 'images/cats3persiancat.jpg'),
@@ -126,8 +126,8 @@ VALUES
 (51, 'Snowball', 'CAT', '1 year', 'FEMALE', 'Persian', 'Prone to watery eyes', 'AVAILABLE', 'Graceful and calm, loves grooming sessions.', 'images/cats3persiancat.jpg'),
 (52, 'Shadow', 'CAT', '2 years 5 months', 'MALE', 'Bombay cat', NULL, 'ADOPTED', 'Jet-black coat and a playful personality.', 'images/cats3bombaycat.jpg'),
 (53, 'Mittens', 'CAT', '7 months', 'FEMALE', 'Indie', NULL, 'AVAILABLE', 'Charming and playful, loves small spaces.', 'images/cats2indianbreed.jpg'),
-(54, 'Simba', 'CAT', '1 year 3 months', 'MALE', 'American Shorthair', 'Sensitive digestion', 'AVAILABLE', 'Cheerful and loves belly rubs.', 'images/cats2americanshorthair.jpg'),
-(55, 'Luna', 'CAT', '3 years', 'FEMALE', 'Persian', NULL, 'ADOPTED', 'Fluffy and affectionate, enjoys lounging on soft cushions.', 'images/cats3persiancat.jpg'),
+(54, 'Simba', 'CAT', '1 year 3 months', 'MALE', 'American Shorthair', 'Sensitive digestion', 'AVAILABLE', 'Cheerful and loves belly rubs, perfect for kids.', 'images/cats2americanshorthair.jpg'),
+(55, 'Luna', 'CAT', '3 years', 'FEMALE', 'Persian', NULL, 'ADOPTED', 'Affectionate, enjoys lounging on soft cushions.', 'images/cats3persiancat.jpg'),
 (56, 'Oliver', 'CAT', '1 year 7 months', 'MALE', 'Bombay cat', 'Mild respiratory issues', 'AVAILABLE', 'Loves to chase shadows and play with strings.', 'images/cats2bombaycat.jpg'),
 (57, 'Cleo', 'CAT', '8 months', 'FEMALE', 'Indie', NULL, 'AVAILABLE', 'Lively and curious, enjoys exploring new spaces.', 'images/cats5indianbreed.jpg'),
 (58, 'Smokey', 'CAT', '2 years', 'MALE', 'American Shorthair', NULL, 'AVAILABLE', 'Quiet and gentle, loves being held.', 'images/cats3americanshorthair.jpg'),
@@ -198,26 +198,46 @@ VALUES
 
 -- Inserting volunteers based on random users from the User table
 
-INSERT INTO Volunteers (User_ID, Name, Email, Phone_Number, Age, Address, Camp_Location, Image_Path)
-SELECT User_ID, Name, Email, Phone_Number, 30, '123 Main St', 'KORMANGALA', 'images/volunteer1.jpg'
+INSERT INTO Volunteers (Name, Email, Phone_Number, Age, Address, Camp_Location, Image_Path)
+SELECT Name, Email, Phone_Number, 30, '123 Main St', 'KORMANGALA', 'images/volunteer1.jpg'
 FROM User
 WHERE User_ID = 2;  -- Liam Carter
 
-INSERT INTO Volunteers (User_ID, Name, Email, Phone_Number, Age, Address, Camp_Location, Image_Path)
-SELECT User_ID, Name, Email, Phone_Number, 28, '456 Oak St', 'MARTHAHALLI', 'images/volunteer2.jpg'
+INSERT INTO Volunteers (Name, Email, Phone_Number, Age, Address, Camp_Location, Image_Path)
+SELECT Name, Email, Phone_Number, 28, '456 Oak St', 'MARTHAHALLI', 'images/volunteer2.jpg'
 FROM User
 WHERE User_ID = 5;  -- Emma Hill
 
-INSERT INTO Volunteers (User_ID, Name, Email, Phone_Number, Age, Address, Camp_Location, Image_Path)
-SELECT User_ID, Name, Email, Phone_Number, 25, '789 Pine St', 'HOSA ROAD', 'images/volunteer3.jpg'
+INSERT INTO Volunteers ( Name, Email, Phone_Number, Age, Address, Camp_Location, Image_Path)
+SELECT Name, Email, Phone_Number, 25, '789 Pine St', 'HOSA ROAD', 'images/volunteer3.jpg'
 FROM User
 WHERE User_ID = 7;  -- Sophia Dean
 
-INSERT INTO Volunteers (User_ID, Name, Email, Phone_Number, Age, Address, Camp_Location, Image_Path)
-SELECT User_ID, Name, Email, Phone_Number, 35, '101 Maple St', 'KORMANGALA', 'images/volunteer4.jpg'
+INSERT INTO Volunteers (Name, Email, Phone_Number, Age, Address, Camp_Location, Image_Path)
+SELECT Name, Email, Phone_Number, 35, '101 Maple St', 'KORMANGALA', 'images/volunteer4.jpg'
 FROM User
 WHERE User_ID = 9;  -- Ava Scott
 
 Insert into admin values(1,'Kevin','kev@gmail.com','qwerty1234'),
 (2,'Simran','simran@gmail.com','1234qwerty'),
 (3,'Shradha','shradha@gmail.com','asdfgh7890');
+
+CREATE TABLE catadoptform (
+id INT AUTO_INCREMENT PRIMARY KEY,
+name VARCHAR(255) NOT NULL,
+email VARCHAR(255) NOT NULL,
+phone_number VARCHAR(15) NOT NULL,
+pet_type ENUM('Dog', 'Cat', 'Hamster') NOT NULL,
+reason TEXT NOT NULL
+);
+ALTER TABLE catadoptform
+ADD COLUMN address TEXT NOT NULL;
+
+INSERT INTO catadoptform(name, email, phone_number, pet_type, reason, address)
+VALUES
+('Johns Doven', 'johnsdoven@example.com', '+911268767890', 'Dog', 'I want to provide a loving home.', '123 Main Street, Delhi, India'),
+('Jane Sam', 'janesam@example.com', '+919876642210', 'Cat', 'Looking for a companion.', '456 Park Avenue, Bangalore, India'),
+('Emily Blunt', 'emilyblunt@example.com', '9867543210', 'Hamster', 'My kids want a small pet to care for.', '789 Green Road, Mumbai, India'),
+('Micky Johnson', 'mickyjon@example.com', '+919123654789', 'Dog', 'Always wanted a dog to adopt.', '101 Sunset Blvd, Hyderabad, India'),
+('Sophia wells', 'sophiawell@example.com', '9123567789', 'Cat', 'Looking for a cat to keep me company.', '303 Oak Street, Chennai, India');
+

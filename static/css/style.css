@@ -9767,6 +9767,9 @@ textarea.form-control {
   animation: loader-dash 1.5s ease-in-out infinite;
   stroke-linecap: round; }
 
+ 
+
+
 @-webkit-keyframes loader-rotate {
   100% {
     -webkit-transform: rotate(360deg);
@@ -9798,3 +9801,24 @@ textarea.form-control {
   100% {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -136px; } }
+
+/* Custom styles for the "Adopt" button */
+a.btn.adopt-btn {
+  background-color: var(--green);
+  color: white; 
+  border: 2px solid green;
+  padding: 10px 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out; 
+  text-align: center;
+}
+
+
+a.btn.adopt-btn:hover {
+  background-color: white; 
+  color: green; 
+  border-color: green; 
+}
+
