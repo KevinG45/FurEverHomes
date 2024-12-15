@@ -33,11 +33,12 @@ CREATE TABLE Adoption_Application (
 );
 CREATE TABLE Donations (
     Donation_ID INT PRIMARY KEY AUTO_INCREMENT,
-    User_ID INT NOT NULL,
+    Name VARCHAR(255) NOT NULL DEFAULT 'Anonymous',
+    email varchar(255) not null,
     Amount DECIMAL(10, 2) NOT NULL,
+    phone_number VARCHAR(15) not null,
     Payment_Method ENUM('CREDIT CARD', 'DEBIT CARD', 'UPI', 'NET BANKING') NOT NULL,
-    Donation_Date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (User_ID) REFERENCES User(User_ID)
+    Donation_Date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 CREATE TABLE Volunteers (
     Volunteer_ID INT PRIMARY KEY AUTO_INCREMENT,
@@ -135,8 +136,7 @@ VALUES
 (59, 'Peaches', 'CAT', '4 years', 'FEMALE', 'Persian', 'Occasional sneezing', 'ADOPTED', 'A fluffy bundle of love, adores being pampered.', 'images/cats3persiancat.jpg'),
 (60, 'Leo', 'CAT', '1 year 5 months', 'MALE', 'Bombay cat', NULL, 'AVAILABLE', 'Sleek and friendly, loves spending time with humans.', 'images/cats2bombaycat.jpg');
 
-ALTER TABLE Donations
-ADD Name VARCHAR(255) NOT NULL DEFAULT 'Anonymous';
+
 
 INSERT INTO User (User_ID, Name, Email, Phone_Number, Password)
 VALUES
@@ -213,28 +213,45 @@ Insert into admin values(1,'Kevin','kev@gmail.com','qwerty1234'),
 (2,'Simran','simran@gmail.com','1234qwerty'),
 (3,'Shradha','shradha@gmail.com','asdfgh7890');
 
-ALTER TABLE donations
-ADD COLUMN phone_number VARCHAR(15),
-ADD COLUMN email VARCHAR(255);
 
 
-INSERT INTO Donations (Donation_ID, User_ID, Name, Amount, Payment_Method, Donation_Date, phone_number, email)
+INSERT INTO Donations (Name, email, Amount, phone_number, Payment_Method) VALUES
+('John Doe', 'johndoe@example.com', 500.00, '9876543210', 'CREDIT CARD'),
+('Jane Smith', 'janesmith@example.com', 750.50, '8765432109', 'DEBIT CARD'),
+('Anonymous', 'anonymous1@example.com', 1000.00, '7654321098', 'UPI'),
+('Michael Johnson', 'michael.johnson@example.com', 2575.00, '6543210987', 'NET BANKING'),
+('Emily Brown', 'emilybrown@example.com', 2000.00, '5432109876', 'CREDIT CARD'),
+('Anonymous', 'anonymous2@example.com', 1500.00, '4321098765', 'UPI'),
+('Sarah Davis', 'sarahdavis@example.com', 3000.00, '3210987654', 'DEBIT CARD'),
+('David Wilson', 'davidwilson@example.com', 800.00, '2109876543', 'CREDIT CARD'),
+('Anna Moore', 'annamoore@example.com', 1205.50, '1098765432', 'NET BANKING'),
+('Anonymous', 'anonymous3@example.com', 600.00, '9876012345', 'DEBIT CARD'),
+('James Taylor', 'jamestaylor@example.com', 5000.00, '8765012345', 'UPI'),
+('Olivia Anderson', 'oliviaanderson@example.com', 400.00, '7654012345', 'NET BANKING'),
+('Anonymous', 'anonymous4@example.com', 900.00, '6543012345', 'CREDIT CARD'),
+('Liam Martinez', 'liammartinez@example.com', 2500.00, '5432012345', 'DEBIT CARD'),
+('Sophia Garcia', 'sophiagarcia@example.com', 350.00, '4321012345', 'UPI');
+
+
+CREATE TABLE dogadoptform (
+    id INT AUTO_INCREMENT PRIMARY KEY, 
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    phone_number VARCHAR(15) NOT NULL,
+    pet_type ENUM('Dog', 'Cat', 'Hamster') NOT NULL,
+    reason TEXT NOT NULL
+);
+ALTER TABLE dogadoptform
+ADD COLUMN address TEXT NOT NULL;
+
+INSERT INTO dogadoptform(name, email, phone_number, pet_type, reason, address) 
 VALUES 
-(1, 1, 'Mia Reed', 500, 'CREDIT CARD', '2024-12-10', '9876543210', 'mia.reed@gmail.com'),
-(2, 2, 'Emma Hill', 1200, 'NET BANKING', '2024-12-09', '9123456789', 'emma.hill@gmail.com'),
-(3, 3, 'Ethan Fox', 250, 'DEBIT CARD', '2024-12-08', '9156782345', 'ethan.fox@gmail.com'),
-(4, 4, 'Sophia Dean', 750, 'UPI', '2024-12-07', '9991234567', 'sophia.dean@gmail.com'),
-(5, 5, 'Logan Price', 600, 'CREDIT CARD', '2024-12-06', '9836541234', 'logan.price@gmail.com'),
-(6, 6, 'Ava Scott', 900, 'DEBIT CARD', '2024-12-05', '9738901234', 'ava.scott@gmail.com'),
-(7, 7, 'Jack Hayes', 1500, 'UPI', '2024-12-04', '9812345678', 'jack.hayes@gmail.com'),
-(8, 8, 'Ria Singh', 450, 'CREDIT CARD', '2024-12-03', '9871234567', 'ria.singh@gmail.com'),
-(9, 9, 'Krish Patel', 1100, 'NET BANKING', '2024-12-02', '9665332211', 'krish.patel@gmail.com'),
-(10, 10, 'Mia Reed', 800, 'UPI', '2024-12-01', '9876543210', 'mia.reed@gmail.com'),
-(11, 1, 'Emma Hill', 550, 'NET BANKING', '2024-11-30', '9123456789', 'emma.hill@gmail.com'),
-(12, 2, 'Ethan Fox', 1300, 'DEBIT CARD', '2024-11-29', '9156782345', 'ethan.fox@gmail.com'),
-(13, 3, 'Sophia Dean', 300, 'CREDIT CARD', '2024-11-28', '9991234567', 'sophia.dean@gmail.com'),
-(14, 4, 'Logan Price', 950, 'DEBIT CARD', '2024-11-27', '9836541234', 'logan.price@gmail.com'),
-(15, 5, 'Ava Scott', 1100, 'UPI', '2024-11-26', '9738901234', 'ava.scott@gmail.com');
+('John Doe', 'johndoe@example.com', '+911234567890', 'Dog', 'I want to provide a loving home.', '123 Main Street, Delhi, India'),
+('Jane Smith', 'janesmith@example.com', '+919876543210', 'Cat', 'Looking for a companion.', '456 Park Avenue, Bangalore, India'),
+('Emily Brown', 'emilybrown@example.com', '9876543210', 'Hamster', 'My kids want a small pet to care for.', '789 Green Road, Mumbai, India'),
+('Michael Johnson', 'michaelj@example.com', '+919123456789', 'Dog', 'Always wanted a dog to adopt.', '101 Sunset Blvd, Hyderabad, India'),
+('Sophia White', 'sophiaw@example.com', '9123456789', 'Cat', 'Looking for a cat to keep me company.', '303 Oak Street, Chennai, India');
 
-
+ALTER TABLE Donations
+DROP COLUMN Donation_Date;
 
