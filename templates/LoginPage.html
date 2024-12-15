@@ -1,11 +1,490 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="static\images\logo.png" type="image/x-icon" />
+    <!-- ===== Iconscout CSS ===== -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
+    <!-- ===== CSS ===== -->
+    <link rel="stylesheet" href="style.css" />
+    <title>Login & Registration </title>
+    <style>
+        
 
-</body>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+
+
+body {
+    height: 100vh;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative; /* Required for positioning the pseudo-element */
+    background-image: url('static\\images\\dog+cat.jpg'); /* Replace with your image path */
+    background-size: cover; /* Ensures the image covers the entire background */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    background-position: center; /* Centers the image */
+    overflow: hidden; /* Prevents scrollbars */
+
+}
+
+
+
+.container {
+    position: relative;
+    max-width: 430px;
+    width: 100%;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin: 0 20px;
+}
+
+.container .forms {
+    display: flex;
+    align-items: center;
+    height: auto;
+    width: 200%;
+    transition: height 0.2s ease;
+}
+
+
+.container .form {
+    width: 50%;
+    padding: 30px;
+    background-color: #fff;
+    transition: margin-left 0.18s ease;
+    min-height: 500px;
+}
+
+.container.active .login {
+    margin-left: -50%;
+    opacity: 0;
+    transition: margin-left 0.18s ease, opacity 0.15s ease;
+}
+
+.container .signup {
+    opacity: 0;
+    transition: opacity 0.09s ease;
+}
+
+.container.active .signup {
+    opacity: 1;
+    transition: opacity 0.2s ease;
+}
+
+.container.active .forms {
+    height: 600px;
+}
+
+.container .form .title {
+    position: relative;
+    font-size: 27px;
+    font-weight: 600;
+}
+
+.form .title::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 30px;
+    background-color: #4070f4;
+    border-radius: 25px;
+}
+
+.form .input-field {
+    position: relative;
+    height: 50px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.input-field input {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    padding: 0 35px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    border-bottom: 2px solid #ccc;
+    border-top: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.input-field input:is(:focus, :valid) {
+    border-bottom-color: #4070f4;
+}
+
+.input-field i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    font-size: 23px;
+    transition: all 0.2s ease;
+}
+
+.input-field input:is(:focus, :valid)~i {
+    color: #4070f4;
+}
+
+.input-field i.icon {
+    left: 0;
+}
+
+.input-field i.showHidePw {
+    right: 0;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.form .checkbox-text {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.checkbox-text .checkbox-content {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-content input {
+    margin-right: 10px;
+    accent-color: #4070f4;
+}
+
+.form .text {
+    color: #333;
+    font-size: 14px;
+}
+
+.form a.text {
+    color: #4070f4;
+    text-decoration: none;
+}
+
+.form a:hover {
+    text-decoration: underline;
+}
+
+.form .button {
+    margin-top: 35px;
+}
+
+.form .button input {
+    border: none;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    border-radius: 6px;
+    background-color: #4070f4;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.button input:hover {
+    background-color: #265df2;
+}
+
+.form .login-signup {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.form.change-password {
+  display:none; /* Hide by default */
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  
+}
+
+.container.active .change-password {
+  display: block; /* Show when active */
+  opacity: 1;
+  transition: opacity 0.2s ease;
+  
+}
+
+
+
+
+</style>
+  </head>
+  <body>
+    
+    <div class="container">
+      <div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul>
+                    {% for category, message in messages %}
+                        <li class="alert alert-{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
+      
+
+      <div class="forms">
+        
+        <!-- Login Form -->
+        <div class="form login">
+          <span class="title">Login</span>
+          <form action="/login" method="POST" onsubmit="return validateLoginForm(event)">
+            <div class="input-field">
+              <input type="text" name="email" placeholder="Enter your email" onblur="validateEmail(this)" required />
+              <i class="uil uil-envelope icon"></i>
+            </div>
+            <div class="input-field">
+              <input type="password" name="password" class="password" placeholder="Enter your password" onblur="validatePassword(this)" required />
+              <i class="uil uil-lock icon"></i>
+              <i class="uil uil-eye-slash showHidePw"></i>
+            </div>
+            <div class="checkbox-text">
+              <div class="checkbox-content">
+                <input type="checkbox" id="logCheck" />
+                <label for="logCheck" class="text">Remember me</label>
+              </div>
+              <a href="#" class="text forgot-link">Forgot password?</a>
+            </div>
+            <div class="input-field button">
+              <input type="submit" value="Login" />
+            </div>
+          </form>
+          <div class="login-signup">
+            <span class="text">Not a member? <a href="#" class="text signup-link">Signup Now</a></span>
+          </div>
+        </div>
+    
+        <!-- Signup Form -->
+        <div class="form signup">
+          <span class="title">Registration</span>
+          <form action="/register" method="POST" onsubmit="return validateSignupForm(event)">
+            <div class="input-field">
+              <input type="text"name="name" placeholder="Enter your name" required />
+              <i class="uil uil-user"></i>
+            </div>
+            <div class="input-field">
+              <input type="text" name="email" placeholder="Enter your email" required />
+              <i class="uil uil-envelope icon"></i>
+            </div>
+            <div class="input-field">
+              <input type="text" name="phone" placeholder="Enter your phone number" required />
+              <i class="uil uil-phone icon"></i>
+            </div>
+
+            <div class="input-field">
+              <input type="password" name="password"class="password" placeholder="Create a password" required />
+              <i class="uil uil-lock icon"></i>
+            </div>
+            <div class="input-field">
+              <input type="password"name="confirm_password" class="password" placeholder="Confirm a password" required />
+              <i class="uil uil-lock icon"></i>
+              <i class="uil uil-eye-slash showHidePw"></i>
+            </div>
+            <div class="checkbox-text">
+              <div class="checkbox-content">
+                <input type="checkbox" id="termCon" required/>
+                <label for="termCon" class="text">I accepted all terms and conditions</label>
+              </div>
+            </div>
+            <div class="input-field button">
+              <input type="submit" value="Signup" />
+            </div>
+          </form>
+          <div class="login-signup">
+            <span class="text">Already a member? <a href="#" class="text login-link">Login Now</a></span>
+          </div>
+        </div>
+    
+        <!-- Change Password Form -->
+        <div class="form change-password">
+          <span class="title">Change Password</span>
+          <form action="/change-password" method="POST" onsubmit="return validateChangePasswordForm(event)">
+            <div class="input-field">
+              <input type="email" name="email" placeholder="Enter your email" required />
+              <i class="uil uil-envelope icon"></i>
+            </div>
+            <div class="input-field">
+              <input type="password" name="new_password" placeholder="Enter new password" required />
+              <i class="uil uil-lock icon"></i>
+            </div>
+            <div class="input-field">
+              <input type="password" name="confirm_password" placeholder="Confirm new password" required />
+              <i class="uil uil-lock icon"></i>
+            </div>
+            <div class="input-field button">
+              <input type="submit" value="Change Password" />
+            </div>
+          </form>
+          <div class="login-signup">
+            <span class="text">Remembered your password? <a href="#" class="text login-link">Login now</a></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+<script>
+  const container = document.querySelector(".container"),
+    pwShowHide = document.querySelectorAll(".showHidePw"),
+    pwFields = document.querySelectorAll(".password"),
+    signUp = document.querySelector(".signup-link"),
+    login = document.querySelector(".login-link"),
+    forgotPassword = document.querySelector(".forgot-link"),
+    changePasswordForm = document.querySelector(".change-password"),
+    loginForm = document.querySelector(".login"),
+    signupForm = document.querySelector(".signup");
+
+  // Show/hide password logic
+  pwShowHide.forEach((eyeIcon) => {
+    eyeIcon.addEventListener("click", () => {
+      pwFields.forEach((pwField) => {
+        if (pwField.type === "password") {
+          pwField.type = "text";
+          eyeIcon.classList.replace("uil-eye-slash", "uil-eye");
+        } else {
+          pwField.type = "password";
+          eyeIcon.classList.replace("uil-eye", "uil-eye-slash");
+        }
+      });
+    });
+  });
+
+  // Event listener for switching between login and signup forms
+  signUp.addEventListener("click", (e) => {
+    e.preventDefault();
+    container.classList.add("active");
+    //changePasswordForm.style.display = "none";
+    changePasswordForm.classList.remove("active");
+    signupForm.style.display = "block";
+    loginForm.style.display = "none";
+    resetForms();
+  });
+
+  login.addEventListener("click", (e) => {
+    e.preventDefault();
+    container.classList.remove("active");
+    //changePasswordForm.style.display = "none"; // Hide change-password form if visible
+    changePasswordForm.classList.remove("active");
+    loginForm.style.display = "block";
+    signupForm.style.display = "none";
+    resetForms();
+  });
+  forgotPassword.addEventListener("click", (e) => {
+      e.preventDefault();
+      //changePasswordForm.style.display = "block"; // Show change-password form
+      container.classList.add("active");
+      signupForm.style.display = "none";
+      loginForm.style.display = "none";
+      //changePasswordForm.style.display = "block";
+      changePasswordForm.classList.add("active");
+      resetForms();
+
+  });
+  const loginNowLink = changePasswordForm.querySelector(".login-link");
+    loginNowLink.addEventListener("click", (e) => {
+        e.preventDefault();
+        container.classList.remove("active");
+        changePasswordForm.classList.remove("active");
+        loginForm.style.display = "block";
+        resetForms();
+    });
+
+  // Function to reset all forms when navigating
+  function resetForms() {
+    document.querySelectorAll("form").forEach((form) => form.reset());
+    pwFields.forEach((pwField) => (pwField.type = "password"));
+  }
+
+  // Reset forms on load
+  window.onload = resetForms;
+  function validateSignupForm(event) {
+        const name = document.querySelector('[name="name"]').value.trim();
+        const email = document.querySelector('[name="email"]').value.trim();
+        const phone = document.querySelector('[name="phone"]').value.trim();
+        const password = document.querySelector('[name="password"]').value.trim();
+        const confirmPassword = document.querySelector('[name="confirm_password"]').value.trim();
+
+        if (!name || !email ||!phone|| !password || !confirmPassword) {
+            alert('Please fill in all fields.');
+            return false;
+        }
+        if (!/^[a-zA-Z]+$/.test(name)) {
+            alert('Name must contain only alphabets.');
+            return false;
+        }
+        if (!/\S+@\S+\.\S+/.test(email)) {
+            alert('Please enter a valid email address.');
+            return false;
+        }
+        if (!/^\d{10}$/.test(phone)) {
+            alert('Please enter a valid phone number.');
+            return false;
+        }
+        if (password.length < 6) {
+            alert('Password must be at least 6 characters long.');
+            return false;
+        }
+        if (password !== confirmPassword) {
+            alert('Passwords do not match.');
+            return false;
+        }
+        // Here you would typically check against the database
+        return true;
+    }
+
+    function validateChangePasswordForm(event) {
+        const email = document.querySelector('[name="email"]').value.trim();
+        const newPassword = document.querySelector('[name="new_password"]').value.trim();
+        const confirmPassword = document.querySelector('[name="confirm_password"]').value.trim();
+
+        if (!email || !newPassword || !confirmPassword) {
+            alert('Please fill in all fields.');
+            return false;
+        }
+        // Here you would typically check if the email exists in the database
+        if (newPassword.length < 6) {
+            alert('New password must be at least 6 characters long.');
+            return false;
+        }
+        if (newPassword !== confirmPassword) {
+            alert('New passwords do not match.');
+            return false;
+        }
+        return true;
+    }
+ 
+
+
+
+
+
+
+
+
+</script>
+
+
+  </body>
 </html>
