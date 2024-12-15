@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Pet Sitting - Adopt a Pet</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <!-- Fonts and Icons -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/animate.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/owl.theme.default.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/magnific-popup.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-datepicker.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.timepicker.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/flaticon.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  </head>
+  <body>
+    <!-- Header Section -->
+    <div class="wrap">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 d-flex align-items-center">
+            <p class="mb-0 phone pl-md-2">
+              <a href="#" class="mr-2"><span class="fa fa-phone mr-1"></span> +91 7975308401</a> 
+              <a href="#"><span class="fa fa-paper-plane mr-1"></span> purrfecthomes@gmail.com</a>
+            </p>
+          </div>
+          <div class="col-md-6 d-flex justify-content-md-end">
+            <div class="social-media"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+      <div class="container">
+        <a class="navbar-brand" href="{{ url_for('home') }}">
+          <span><img src="{{ url_for('static', filename='images/logo.png') }}" width="200px" height="200px"></span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="fa fa-bars"></span> Menu
+        </button>
+        <div class="collapse navbar-collapse" id="ftco-nav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a href="{{ url_for('home') }}" class="nav-link">Home</a></li>
+            <li class="nav-item"><a href="{{ url_for('about') }}" class="nav-link">About</a></li>
+            <li class="nav-item active"><a href="{{ url_for('adoption') }}" class="nav-link">Adopt</a></li>
+            <li class="nav-item"><a href="{{ url_for('volunteer') }}" class="nav-link">Volunteer</a></li>
+            <li class="nav-item"><a href="{{ url_for('donation') }}" class="nav-link">Donate</a></li>
+            <li class="nav-item"><a href="{{ url_for('contact') }}" class="nav-link">Contact</a></li>
+            <li class="nav-item"><a href="{{ url_for('login') }}" class="nav-link">Login</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero-wrap hero-wrap-2" style="background-image: url('/static/images/bg_2.jpg');" data-stellar-background-ratio="0.5">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text align-items-end">
+          <div class="col-md-9 ftco-animate pb-5">
+            <p class="breadcrumbs mb-2">
+              <span class="mr-2"><a href="{{ url_for('home') }}">Home <i class="ion-ios-arrow-forward"></i></a></span>
+              <span>Adopt <i class="ion-ios-arrow-forward"></i></span>
+            </p>
+            <h1 class="mb-0 bread">Adopt</h1>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Adopt Info Section -->
+    <section class="ftco-section ftco-no-pt ftco-no-pb">
+      <div class="container">
+        <div class="row d-flex no-gutters">
+          <div class="col-md-5 d-flex">
+            <div class="img img-video d-flex align-self-stretch align-items-center justify-content-center mb-4" style="background-image: url('/static/images/adoptpage.png');"></div>
+          </div>
+          <div class="col-md-7 pl-md-5 py-md-5">
+            <div class="heading-section pt-md-5">
+              <h2 class="mb-4">Find Your New Best Friend Today!</h2>
+            </div>
+            <p>Looking for a furry companion to fill your life with love and joy? Adopt a pet today! Our shelter is home to countless adorable animals, each eager for a loving home. From playful kittens to gentle dogs, there's a perfect match for everyone. Give a homeless pet a second chance at happiness. Adopt, don't shop! Your decision to adopt will make a lasting impact on a life in need.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="ftco-section bg-light">
+      <div class="container">
+        <div class="row mb-5 pb-5">
+          <!-- Dogs -->
+          <div class="col-md-4 d-flex align-self-stretch px-4 ftco-animate">
+            <div class="d-block services text-center">
+              <div class="icon d-flex align-items-center justify-content-center">
+                <span class="flaticon-dog-eating" style="width:50px"></span>
+              </div>
+              <div class="media-body p-4">
+                <h3 class="heading">Dogs</h3>
+                <p>Loyal and loving companions, dogs bring joy and energy to your home. Perfect for active individuals or families, they thrive on affection, training, and outdoor adventures.</p>
+                <a href="{{ url_for('dogadoption') }}" class="btn-custom d-flex align-items-center justify-content-center">
+                  <span class="fa fa-chevron-right"></span><i class="sr-only">Read more</i>
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- Cats -->
+          <div class="col-md-4 d-flex align-self-stretch px-4 ftco-animate">
+            <div class="d-block services text-center">
+              <div class="icon d-flex align-items-center justify-content-center">
+                <span><img src="{{ url_for('static', filename='images/greencat.png') }}" width="50px" height="50px" style="border-radius: 50%;"></span>
+              </div>
+              <div class="media-body p-4">
+                <h3 class="heading">Cats</h3>
+                <p>Independent yet affectionate, cats make wonderful indoor companions. Their playful curiosity and calming presence make them perfect for cozy homes and anyone seeking a loyal, low-maintenance friend.</p>
+                <a href="{{ url_for('catadoption') }}" class="btn-custom d-flex align-items-center justify-content-center">
+                  <span class="fa fa-chevron-right"></span><i class="sr-only">Read more</i>
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- Hamsters -->
+          <div class="col-md-4 d-flex align-self-stretch px-4 ftco-animate">
+            <div class="d-block services text-center">
+              <div class="icon d-flex align-items-center justify-content-center">
+                <span><img src="{{ url_for('static', filename='images/greenham.png') }}" width="50px" height="50px" style="border-radius: 50%;"></span>
+              </div>
+              <div class="media-body p-4">
+                <h3 class="heading">Hamsters</h3>
+                <p>Small, cute, and low-maintenance, hamsters are great pets for children and first-time owners. Their playful nature and minimal space needs make them perfect for compact living spaces.</p>
+                <a href="{{ url_for('hamsteradoption') }}" class="btn-custom d-flex align-items-center justify-content-center">
+                  <span class="fa fa-chevron-right"></span><i class="sr-only">Read more</i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6 col-lg-3 pl-lg-5 mb-4 mb-md-0">
+						<h2 class="footer-heading">Quick Links</h2>
+						<ul class="list-unstyled">
+              <li><a href="{{ url_for('home') }}" class="py-2 d-block">Home</a></li>
+              <li><a href="{{ url_for('about') }}" class="py-2 d-block">About</a></li>
+              <li><a href="{{ url_for('adoption') }}" class="py-2 d-block">Adopt</a></li>
+              <li><a href="{{ url_for('volunteer') }}" class="py-2 d-block">Volunteer</a></li>
+              <li><a href="{{ url_for('donation') }}" class="py-2 d-block">Donate</a></li>
+              <li><a href="{{ url_for('contact') }}" class="py-2 d-block">Contact</a></li>
+              <li><a href="{{ url_for('login') }}" class="py-2 d-block">Login</a></li>              
+            </ul>
+					</div>
+					<div class="col-md-6 col-lg-3 mb-4 mb-md-0">
+						<h2 class="footer-heading">Have Questions?</h2>
+						<div class="block-23 mb-3">
+              <ul>
+                <li><span class="icon fa fa-map"></span><span class="text">123, 4th Cross, 5th Main, Koramangala 1st Block, Bangalore, Karnataka - 560034</span></li>
+                <li><a href="#"><span class="icon fa fa-phone"></span><span class="text">+91 7975308401</span></a></li>
+                <li><a href="#"><span class="icon fa fa-paper-plane"></span><span class="text">purrfecthomes@gmail.com</span></a></li>
+              </ul>
+            </div>
+					</div>
+				</div>
+				<div class="row mt-5">
+          <div class="col-md-12 text-center">
+
+            <p class="copyright"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved </p>
+          </div>
+        </div>
+			</div>
+		</footer>
+
+    <!-- JavaScript Files -->
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery-migrate-3.0.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.easing.1.3.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.waypoints.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.stellar.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.animateNumber.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap-datepicker.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.timepicker.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/owl.carousel.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/scrollax.min.js') }}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script src="{{ url_for('static', filename='js/google-map.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  </body>
+</html>

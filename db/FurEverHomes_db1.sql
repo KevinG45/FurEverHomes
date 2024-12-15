@@ -1,3 +1,4 @@
+
 create database FurEverHomes_db;
 USE FurEverHomes_db;
 CREATE TABLE Animal (
@@ -32,11 +33,12 @@ CREATE TABLE Adoption_Application (
 );
 CREATE TABLE Donations (
     Donation_ID INT PRIMARY KEY AUTO_INCREMENT,
-    User_ID INT NOT NULL,
+    Name VARCHAR(255) NOT NULL DEFAULT 'Anonymous',
+    email varchar(255) not null,
     Amount DECIMAL(10, 2) NOT NULL,
+    phone_number VARCHAR(15) not null,
     Payment_Method ENUM('CREDIT CARD', 'DEBIT CARD', 'UPI', 'NET BANKING') NOT NULL,
-    Donation_Date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (User_ID) REFERENCES User(User_ID)
+    Donation_Date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 CREATE TABLE Volunteers (
     Volunteer_ID INT PRIMARY KEY AUTO_INCREMENT,
@@ -62,9 +64,9 @@ VALUES
 (1, 'Bruno', 'DOG', '6 years 3 months', 'MALE', 'Labrador', 'Skin allergies', 'AVAILABLE', 'Friendly and energetic, loves playing fetch.', 'images/bruno.jpg'),
 (2, 'Ace', 'DOG', '1 year 8 months', 'MALE', 'Indie', NULL, 'ADOPTED', 'Playful and affectionate, good with kids.', 'images/ace.jpg'),
 (3, 'Sheru', 'DOG', '5 years 1 month', 'MALE', 'Rottweiler', NULL, 'AVAILABLE', 'Protective and loyal, perfect guard dog.', 'images/sheru.jpeg'),
-(4, 'Scooby', 'DOG', '4 years', 'MALE', 'Indie', NULL, 'AVAILABLE', 'Calm, enjoys quiet walks and lounging.', 'images/scooby.jpg'),
+(4, 'Scooby', 'DOG', '4 years', 'MALE', 'Indie', NULL, 'AVAILABLE', 'Calm, enjoys quiet walks and lounging.', 'images/coco.jpg'),
 (5, 'Maximus', 'DOG', '8 months', 'MALE', 'Dachshund', NULL, 'AVAILABLE', 'Very playful, loves company and long walks.', 'images/maximus.jpg'),
-(6, 'Coco', 'DOG', '6 years', 'MALE', 'Indie', 'Arthritis', 'AVAILABLE', 'Cute and friendly, loves to be pampered.', 'images/coco.jpg'),
+(6, 'Coco', 'DOG', '6 years', 'MALE', 'Indie', 'Arthritis', 'AVAILABLE', 'Cute and friendly, loves to be pampered.', 'images/newdog.jpg'),
 (7, 'Cherry', 'DOG', '2 years 5 months', 'FEMALE', 'Pomeranian', NULL, 'ADOPTED', 'Intelligent and energetic, needs active play.', 'images/cherry.jpeg'),
 (8, 'Cookie', 'DOG', '4 years 7 months', 'FEMALE', 'Indie', 'Mild joint pain', 'ADOPTED', 'Loyal and protective, requires daily exercise.', 'images/cookie.jpg'),
 (9, 'Bella', 'DOG', '5 years', 'FEMALE', 'Labrador', NULL, 'AVAILABLE', 'Friendly, loves water, good with children.', 'images/bella.jpeg'),
@@ -109,12 +111,12 @@ VALUES
 
 INSERT INTO Animal (Animal_ID, Name, Animal_Type, Age, Gender, Breed, Health_Issues, Adoption_Status, Description, Image_Path)
 VALUES
-(41, 'Buddy', 'DOG', '2 years', 'MALE', 'Labrador', 'Hip dysplasia', 'AVAILABLE', 'Gentle and loves playing in the park.', 'images/bella.jpeg'),
+(41, 'Buddy', 'DOG', '2 years', 'MALE', 'Labrador', 'Hip dysplasia', 'AVAILABLE', 'Gentle and loves playing in the park.', 'images/ace.jpg'),
 (42, 'Duke', 'DOG', '1 year 6 months', 'MALE', 'Rottweiler', NULL, 'AVAILABLE', 'Protective and highly loyal, a perfect guard dog.', 'images/sheru.jpeg'),
-(43, 'Bella', 'DOG', '4 years', 'FEMALE', 'Indie', NULL, 'ADOPTED', 'Friendly and calm, enjoys quiet walks.', 'images/scooby.jpg'),
+(43, 'Barney', 'DOG', '4 years', 'FEMALE', 'Indie', NULL, 'ADOPTED', 'Friendly and calm, enjoys quiet walks.', 'images/scooby.jpg'),
 (44, 'Lola', 'DOG', '1 year 3 months', 'FEMALE', 'Pomeranian', 'Prone to skin allergies', 'AVAILABLE', 'Lively and loves to cuddle.', 'images/tuffy.jpeg'),
 (45, 'Jack', 'DOG', '3 years', 'MALE', 'Labrador', NULL, 'AVAILABLE', 'Energetic and great with kids.', 'images/bruno.jpg'),
-(46, 'Zoe', 'DOG', '2 years 7 months', 'FEMALE', 'Indie', 'Mild joint stiffness', 'AVAILABLE', 'Quiet and affectionate, loves lounging around.', 'images/ace.jpg'),
+(46, 'Zoe', 'DOG', '2 years 7 months', 'FEMALE', 'Indie', 'Mild joint stiffness', 'AVAILABLE', 'Quiet and affectionate, loves lounging around.', 'images/bella.jpeg'),
 (47, 'Max', 'DOG', '6 months', 'MALE', 'Dachshund', NULL, 'ADOPTED', 'Tiny and playful, enjoys long walks.', 'images/maximus.jpg'),
 (48, 'Daisy', 'DOG', '5 years', 'FEMALE', 'Pomeranian', NULL, 'AVAILABLE', 'Charming and active, loves attention.', 'images/cherry.jpeg'),
 (49, 'Charlie', 'DOG', '1 year', 'MALE', 'Labrador', 'Sensitive stomach', 'ADOPTED', 'Friendly and social, loves outdoor activities.', 'images/bruno.jpg'),
@@ -134,8 +136,7 @@ VALUES
 (59, 'Peaches', 'CAT', '4 years', 'FEMALE', 'Persian', 'Occasional sneezing', 'ADOPTED', 'A fluffy bundle of love, adores being pampered.', 'images/cats3persiancat.jpg'),
 (60, 'Leo', 'CAT', '1 year 5 months', 'MALE', 'Bombay cat', NULL, 'AVAILABLE', 'Sleek and friendly, loves spending time with humans.', 'images/cats2bombaycat.jpg');
 
-ALTER TABLE Donations
-ADD Name VARCHAR(255) NOT NULL DEFAULT 'Anonymous';
+
 
 INSERT INTO User (User_ID, Name, Email, Phone_Number, Password)
 VALUES
@@ -150,17 +151,7 @@ VALUES
 (9, 'Ava Scott', 'ava.scott@example.com', '1987654321', 'avaSecure'),
 (10, 'Jack Hayes', 'jack.hayes@example.com', '9876501234', 'jack456');
 
-INSERT INTO Donations (Donation_ID, User_ID, Name, Amount, Payment_Method, Donation_Date)
-VALUES
-(1, 3, 'Mia Reed', 150.00, 'CREDIT CARD', '2024-12-05 10:30:00'),
-(2, 3, 'Mia Reed', 75.50, 'DEBIT CARD', '2024-12-06 14:45:00'),
-(3, 5, 'Emma Hill', 200.50, 'DEBIT CARD', '2024-12-06 15:45:00'),
-(4, 6, 'Ethan Fox', 300.00, 'CREDIT CARD', '2024-12-06 18:10:00'),
-(5, 6, 'Ethan Fox', 120.75, 'UPI', '2024-12-07 09:30:00'),
-(6, 7, 'Sophia Dean', 250.00, 'UPI', '2024-12-07 09:30:00'),
-(7, 8, 'Logan Price', 180.50, 'NET BANKING', '2024-12-06 16:00:00'),
-(8, 9, 'Ava Scott', 500.00, 'CREDIT CARD', '2024-12-07 11:15:00'),
-(9, 10, 'Jack Hayes', 220.00, 'UPI', '2024-12-07 13:45:00');
+
 
 ALTER TABLE Adoption_Application
 DROP COLUMN Status;
@@ -221,3 +212,46 @@ WHERE User_ID = 9;  -- Ava Scott
 Insert into admin values(1,'Kevin','kev@gmail.com','qwerty1234'),
 (2,'Simran','simran@gmail.com','1234qwerty'),
 (3,'Shradha','shradha@gmail.com','asdfgh7890');
+
+
+
+INSERT INTO Donations (Name, email, Amount, phone_number, Payment_Method) VALUES
+('John Doe', 'johndoe@example.com', 500.00, '9876543210', 'CREDIT CARD'),
+('Jane Smith', 'janesmith@example.com', 750.50, '8765432109', 'DEBIT CARD'),
+('Anonymous', 'anonymous1@example.com', 1000.00, '7654321098', 'UPI'),
+('Michael Johnson', 'michael.johnson@example.com', 2575.00, '6543210987', 'NET BANKING'),
+('Emily Brown', 'emilybrown@example.com', 2000.00, '5432109876', 'CREDIT CARD'),
+('Anonymous', 'anonymous2@example.com', 1500.00, '4321098765', 'UPI'),
+('Sarah Davis', 'sarahdavis@example.com', 3000.00, '3210987654', 'DEBIT CARD'),
+('David Wilson', 'davidwilson@example.com', 800.00, '2109876543', 'CREDIT CARD'),
+('Anna Moore', 'annamoore@example.com', 1205.50, '1098765432', 'NET BANKING'),
+('Anonymous', 'anonymous3@example.com', 600.00, '9876012345', 'DEBIT CARD'),
+('James Taylor', 'jamestaylor@example.com', 5000.00, '8765012345', 'UPI'),
+('Olivia Anderson', 'oliviaanderson@example.com', 400.00, '7654012345', 'NET BANKING'),
+('Anonymous', 'anonymous4@example.com', 900.00, '6543012345', 'CREDIT CARD'),
+('Liam Martinez', 'liammartinez@example.com', 2500.00, '5432012345', 'DEBIT CARD'),
+('Sophia Garcia', 'sophiagarcia@example.com', 350.00, '4321012345', 'UPI');
+
+
+CREATE TABLE dogadoptform (
+    id INT AUTO_INCREMENT PRIMARY KEY, 
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    phone_number VARCHAR(15) NOT NULL,
+    pet_type ENUM('Dog', 'Cat', 'Hamster') NOT NULL,
+    reason TEXT NOT NULL
+);
+ALTER TABLE dogadoptform
+ADD COLUMN address TEXT NOT NULL;
+
+INSERT INTO dogadoptform(name, email, phone_number, pet_type, reason, address) 
+VALUES 
+('John Doe', 'johndoe@example.com', '+911234567890', 'Dog', 'I want to provide a loving home.', '123 Main Street, Delhi, India'),
+('Jane Smith', 'janesmith@example.com', '+919876543210', 'Cat', 'Looking for a companion.', '456 Park Avenue, Bangalore, India'),
+('Emily Brown', 'emilybrown@example.com', '9876543210', 'Hamster', 'My kids want a small pet to care for.', '789 Green Road, Mumbai, India'),
+('Michael Johnson', 'michaelj@example.com', '+919123456789', 'Dog', 'Always wanted a dog to adopt.', '101 Sunset Blvd, Hyderabad, India'),
+('Sophia White', 'sophiaw@example.com', '9123456789', 'Cat', 'Looking for a cat to keep me company.', '303 Oak Street, Chennai, India');
+
+ALTER TABLE Donations
+DROP COLUMN Donation_Date;
+
