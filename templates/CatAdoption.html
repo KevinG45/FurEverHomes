@@ -65,30 +65,46 @@
       </div>
     </section>
 
-   <section class="ftco-section bg-light">
-    <div class="container">
-        <div class="row">
-            {% for cat in catlist %}
-            <div class="col-md-6 col-lg-3 ftco-animate">
-                <div class="staff">
-                    <div class="img-wrap d-flex align-items-stretch">
-                        <img src="{{ url_for('static', filename=cat[0]) }}" alt="{{ cat[1] }}" class="img-fluid">
-                    </div>
-                    <div class="text pt-3 px-3 pb-4 text-center">
-                        <h3>{{ cat[1] }}</h3>
-                        <span class="position mb-2">{{ cat[2] }} <br> <b><i>{{ cat[3] }} breed</i></b></span>
-                        <p>{{ cat[4] }}</p>
-                        <!-- Add the Adopt Button -->
-                        <a href="{{ url_for('catadoptionform', cat_id=cat[5]) }}" class="btn btn-primary adopt-btn mt-3">Adopt</a>
+   <!-- Search Form -->
+<form action="{{ url_for('catadoption') }}" method="GET" class="form-inline mb-4">
+  <div class="form-group mx-sm-3">
+    <label for="breed" class="sr-only">Breed</label>
+    <select name="breed" id="breed" class="form-control">
+      <option value="">All Breeds</option>
+      {% for breed in breed_list %}
+      <option value="{{ breed }}" {% if breed == selected_breed %}selected{% endif %}>{{ breed }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <button type="submit" class="btn btn-primary">Search</button>
+</form>
 
+<!-- Cat Listings -->
+<section class="ftco-section bg-light">
+  <div class="container">
 
-                    </div>
-                </div>
-            </div>
-            
-            {% endfor %}
+    <div class="row">
+      {% if catlist %}
+      {% for cat in catlist %}
+      <div class="col-md-6 col-lg-3 ftco-animate">
+        <div class="staff">
+          <div class="img-wrap d-flex align-items-stretch">
+            <img src="{{ url_for('static', filename=cat[0]) }}" alt="{{ cat[1] }}" class="img-fluid">
+          </div>
+          <div class="text pt-3 px-3 pb-4 text-center">
+            <h3>{{ cat[1] }}</h3>
+            <span class="position mb-2">{{ cat[2] }} <br> <b><i>{{ cat[3] }} breed</i></b></span>
+            <p>{{ cat[4] }}</p>
+            <a href="{{ url_for('catadoptionform', cat_id=cat[5]) }}" class="btn btn-primary adopt-btn mt-3">Adopt</a>
+          </div>
         </div>
+      </div>
+      {% endfor %}
+      {% else %}
+      <p class="text-center">No cats found for the selected breed.</p>
+      {% endif %}
     </div>
+  </div>
 </section>
 
 

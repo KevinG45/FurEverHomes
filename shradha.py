@@ -107,10 +107,37 @@ def dogadoptionform():
 def catadoption():
     dbconn = mysql.connection
     cursor = dbconn.cursor()
-    cursor.execute("select Image_Path, Name, Age, Breed, Description, Animal_ID FROM Animal WHERE Animal_Type='Cat'")
-    results = cursor.fetchall()
-    print(results)
-    return render_template("CatAdoption.html", catlist=results)  # Ensure 'CatAdoption.html' exists in the 'templates' folder
+
+    # Fetch distinct breeds
+    cursor.execute("SELECT DISTINCT Breed FROM Animal WHERE Animal_Type = 'Cat'")
+    breeds = cursor.fetchall()  # Returns a list of tuples [(breed1,), (breed2,)]
+    breed_list = [breed[0] for breed in breeds]  # Flatten to a list [breed1, breed2, ...]
+
+    # Get the selected breed from query parameters
+    selected_breed = request.args.get('breed')
+
+    if selected_breed:
+        # Filter cats by selected breed
+        query = """
+        SELECT Image_Path, Name, Age, Breed, Description, Animal_ID 
+        FROM Animal 
+        WHERE Animal_Type = 'Cat' AND Breed = %s
+        """
+        cursor.execute(query, (selected_breed,))
+    else:
+        # Fetch all cats if no breed is selected
+        query = """
+        SELECT Image_Path, Name, Age, Breed, Description, Animal_ID 
+        FROM Animal 
+        WHERE Animal_Type = 'Cat'
+        """
+        cursor.execute(query)
+
+    catlist = cursor.fetchall()  # Fetch the cats based on the query
+    cursor.close()
+
+    return render_template("CatAdoption.html", catlist=catlist, breed_list=breed_list, selected_breed=selected_breed)
+ # Ensure 'CatAdoption.html' exists in the 'templates' folder
 
 
 # Cat Adoption Form Route
