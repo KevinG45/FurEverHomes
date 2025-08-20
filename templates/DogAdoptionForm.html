@@ -4,7 +4,7 @@
     <title>Pet Sitting - Free Bootstrap 4 Template by Colorlib</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
+    <link rel="icon" href="static\images\logo.png" type="image/x-icon" />
     
     <!-- Fonts and Icons -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
@@ -36,7 +36,7 @@
 		</div>
 		<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 	    <div class="container">
-	    	<a class="navbar-brand" href="index.html"><span><img src="{{ url_for('static', filename='images/logo.png') }}" width="200px" height="200px" width="200px" height="200px"></span></a>
+	    	<a class="navbar-brand" href="{{ url_for('home') }}"><span><img src="{{ url_for('static', filename='images/logo.png') }}" width="200px" height="200px" width="200px" height="200px"></span></a>
 	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 	        <span class="fa fa-bars"></span> Menu
 	      </button>
@@ -59,7 +59,7 @@
       <div class="container">
         <div class="row no-gutters slider-text align-items-end">
           <div class="col-md-9 ftco-animate pb-5">
-          	<p class="breadcrumbs mb-2"><span class="mr-2"><a href="index.html">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Adopt <i class="ion-ios-arrow-forward"></i></span></p>
+          	<p class="breadcrumbs mb-2"><span class="mr-2"><a href="{{ url_for('home') }}">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Adopt <i class="ion-ios-arrow-forward"></i></span></p>
             <h1 class="mb-0 bread">Adopt</h1>
           </div>
         </div>

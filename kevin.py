@@ -1,5 +1,8 @@
 from flask import *
 from flask_mysqldb import MySQL
+import os
+import re
+import ssl
 
 app = Flask(__name__, static_folder='static') 
 
@@ -7,6 +10,7 @@ app.config['MYSQL_HOST']='localhost'
 app.config['MYSQL_DB']='FurEverHomes_db'    
 app.config['MYSQL_USER']='root'
 app.config['MYSQL_PASSWORD']='45@2003kevin!'
+app.config['UPLOAD_FOLDER']='static/uploads'
 
 app.secret_key = 'Project'
 mysql=MySQL(app)
@@ -15,7 +19,7 @@ mysql=MySQL(app)
 @app.route('/', endpoint='home')  # Set 'home' as the endpoint for the root URL
 @app.route('/home')
 def home():
-    return render_template('HomePage.html')  # Ensure 'Home.html' exists in the 'templates' folder
+    return render_template('HomePage.html', username=session.get('username'))  # Pass username to the template # Ensure 'Home.html' exists in the 'templates' folder
 
 # About Route
 @app.route('/about', endpoint='about')
@@ -28,14 +32,81 @@ def volunteer():
     return render_template('Volunteer.html')  # Ensure 'Volunteer.html' exists in the 'templates' folder
 
 # Volunteer Form Route
-@app.route('/volunteerform', endpoint='volunteerform')
+@app.route('/volunteerform', methods=['GET', 'POST'])
 def volunteerform():
-    return render_template('VolunteerForm.html')  # Ensure 'VolunteerForm.html' exists in the 'templates' folder
+    def allowed_file(filename):
+        return '.' in filename and filename.rsplit('.', 1)[1].lower() in ['jpg', 'jpeg', 'png', 'g[if']
+
+    if request.method == 'POST':
+        # Retrieve form data
+        vname = request.form['volunteername']
+        vemail = request.form['email']
+        number = request.form['phone']
+        age = request.form['age']
+        address = request.form['address']
+        location = request.form['camplocation']
+        image = request.files['image']
+        imgname = "/static/uploads/"+image.filename
+        image.save(os.path.join(app.config['UPLOAD_FOLDER'], image.filename))
+         # Replace with dynamic logic if needed
+        print(vname)
+        print(location)
+
+
+        
+
+        # Save data to the database
+        
+        dbconn = mysql.connection
+        cursor = dbconn.cursor()
+        query = """
+        INSERT INTO Volunteers (Name, Email, Phone_Number, Age, Address, Camp_Location, Image_Path)
+            VALUES (%s, %s, %s, %s, %s, %s, %s)
+            """
+        try:
+            cursor.execute(query, (vname, vemail, number, age, address, location, imgname))
+            dbconn.commit()
+            return render_template("VolunteerForm.html", success=True)
+        except Exception as e:
+            dbconn.rollback()
+            print(f"Error: {e}")
+            return render_template("VolunteerForm.html", success=False, error="Failed to submit your form. Please try again later.")
+        
+
+    return render_template('VolunteerForm.html')
 
 # Donate Route
-@app.route('/donation', endpoint='donation')
+@app.route('/donation', methods=['GET', 'POST'])
 def donation():
-    return render_template('Donation.html')  # Ensure 'Donation.html' exists in the 'templates' folder
+    if request.method == "POST":
+        # Retrieve form data
+        dname = request.form.get('donorname')
+        dph = request.form.get('donorphone')
+        demail = request.form.get('donoremail')
+        amt = request.form.get('amount')
+        paymethod = request.form.get('payment_method')
+
+        # Insert data into the database
+        dbconn = mysql.connection
+        cursor = dbconn.cursor()
+        query = """
+        INSERT INTO donations(Name, email, phone_number, Amount, Payment_method) 
+        VALUES (%s, %s, %s, %s, %s)
+        """
+        try:
+            cursor.execute(query, (dname, demail, dph, amt, paymethod))
+            dbconn.commit()
+
+            # Render the form page with success feedback
+            return render_template("donation.html", success=True)
+        except Exception as e:
+            dbconn.rollback()
+            print(f"Error: {e}")
+            # Render the form page with error feedback
+            return render_template("donation.html", success=False, error="Failed to submit your application. Please try again later.")
+
+    # Render the form page for GET requests
+    return render_template("donation.html")
 
 # Contact Route
 @app.route('/contact', endpoint='contact')
@@ -48,7 +119,7 @@ def login():
     if request.method == "POST":
         email = request.form["email"]
         password = request.form["password"]
-        print(f"Email: {email}, Password: {password}") 
+        print(f"Email: {email}, Password: {password}")
         # Database validation
         dbconn = mysql.connection
         cursor = dbconn.cursor()
@@ -56,15 +127,16 @@ def login():
         user = cursor.fetchone()
 
         if user:
-            session["User_ID"] = user[0]
-            session["email"]=email
+            session["User _ID"] = user[0]
+            session["username"] = user[1]  # Assuming the name is in the second column
+            session["email"] = email
             flash("Login successful!", "success")
             return redirect(url_for("home"))
         else:
             flash("Invalid email or password. Please try again.", "danger")
             return redirect(url_for("login"))
-    
-    return render_template('LoginPage.html') 
+
+    return render_template('LoginPage.html')
 
 @app.route('/logout')
 def logout():
@@ -79,6 +151,11 @@ def register():
         email = request.form.get("email")
         phone = request.form.get("phone")
         password = request.form.get("password")
+
+        # Server-side validation
+        if not name or not email or not phone or not password:
+            flash("Please fill in all fields.", "danger")
+            return redirect(url_for("register"))
 
         try:
             dbconn = mysql.connection
@@ -95,7 +172,7 @@ def register():
             cursor.close()
 
         return redirect(url_for("login"))
-    
+
 @app.route("/changepassword", methods=["POST"])
 def change_password():
     if request.method == "POST":
@@ -103,15 +180,25 @@ def change_password():
         new_password = request.form["new_password"]
         confirm_password = request.form["confirm_password"]
 
-        if new_password == confirm_password:
-            # Update the password in the database
-            dbconn = mysql.connection
-            cursor = dbconn.cursor()
-            cursor.execute("UPDATE user SET Password=%s WHERE Email=%s", (new_password, email))
-            dbconn.commit()
-            flash("Password changed successfully! Please login.", "success")
-        else:
+        # Server-side validation
+        if not email or not new_password or not confirm_password:
+            flash("Please fill in all fields.", "danger")
+            return redirect(url_for("change_password"))
+
+        if new_password != confirm_password:
             flash("Passwords do not match. Try again.", "danger")
+            return redirect(url_for("change_password"))
+
+        if len(new_password) < 6:
+            flash("New password must be at least 6 characters long.", "danger")
+            return redirect(url_for("change_password"))
+
+        # Update the password in the database
+        dbconn = mysql.connection
+        cursor = dbconn.cursor()
+        cursor.execute("UPDATE user SET Password=%s WHERE Email=%s", (new_password, email))
+        dbconn.commit()
+        flash("Password changed successfully! Please login.", "success")
 
         return redirect(url_for("login"))
 # Adoption Route
@@ -121,20 +208,156 @@ def adoption():
 
 @app.route("/dogadoption")
 def dogadoption():
-    return render_template("DogAdoption.html")  # Ensure 'DogAdoption.html' exists in the 'templates' folder
+    dbconn = mysql.connection
+    cursor = dbconn.cursor()
 
-@app.route("/dogadoptionform")
+    # Fetch distinct breeds
+    cursor.execute("SELECT DISTINCT Breed FROM Animal WHERE Animal_Type = 'Dog'")
+    breeds = cursor.fetchall()  # Returns a list of tuples [(breed1,), (breed2,)]
+    breed_list = [breed[0] for breed in breeds]  # Flatten to a list [breed1, breed2, ...]
+
+    # Get the selected breed from query parameters
+    selected_breed = request.args.get('breed')
+
+    if selected_breed:
+        # Filter dogs by selected breed
+        query = """
+        SELECT Image_Path, Name, Age, Breed, Description, Animal_ID 
+        FROM Animal 
+        WHERE Animal_Type = 'Dog' AND Breed = %s
+        """
+        cursor.execute(query, (selected_breed,))
+    else:
+        # Fetch all dogs if no breed is selected
+        query = """
+        SELECT Image_Path, Name, Age, Breed, Description, Animal_ID 
+        FROM Animal 
+        WHERE Animal_Type = 'Dog'
+        """
+        cursor.execute(query)
+
+    doglist = cursor.fetchall()  # Fetch the dogs based on the query
+    cursor.close()
+    return render_template("dogadoption.html", doglist=doglist, breed_list=breed_list, selected_breed=selected_breed)
+@app.route('/dogadoptionform', methods=['GET', 'POST'])
 def dogadoptionform():
-    return render_template("DogAdoptionForm.html")  # Ensure 'DogAdoptionForm.html' exists in the 'templates' folder
+    dbconn = mysql.connection
+    cursor = dbconn.cursor()
+
+    # Get dog_id from query parameters
+    dog_id = request.args.get('dog_id')
+
+    # Fetch the specific dog's name
+    dog_name = None
+    if dog_id:
+        cursor.execute("SELECT Name FROM Animal WHERE Animal_ID = %s", (dog_id,))
+        dog = cursor.fetchone()
+        if dog:
+            dog_name = dog[0]  # Extract the dog's name
+
+    if request.method == "POST":
+        # Retrieve form data
+        aname = request.form.get('adopter_name')
+        aemail = request.form.get('adopter_email')
+        aph = request.form.get('adopter_phone')
+        address = request.form.get('adopter_address')
+        pet = request.form.get('pet_type')
+        areason = request.form.get('reason')
+
+        # Insert data into the database
+        query = """
+        INSERT INTO dogadoptform(name, email, phone_number, pet_type, reason, address)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        """
+        try:
+            cursor.execute(query, (aname, aemail, aph, pet, areason, address))
+            dbconn.commit()
+            return render_template("DogAdoptionForm.html", success=True, dog_name=dog_name)
+        except Exception as e:
+            dbconn.rollback()
+            print(f"Error: {e}")
+            return render_template("DogAdoptionForm.html", success=False, error="Failed to submit your application.", dog_name=dog_name)
+
+    # Render the form page with the selected dog's name
+    return render_template('DogAdoptionForm.html', dog_name=dog_name)
 
 @app.route("/catadoption")
 def catadoption():
-    return render_template("CatAdoption.html")  # Ensure 'CatAdoption.html' exists in the 'templates' folder
+    dbconn = mysql.connection
+    cursor = dbconn.cursor()
 
-# Cat Adoption Form Route
-@app.route('/catadoptionform', endpoint='catadoptionform')
+    # Fetch distinct breeds
+    cursor.execute("SELECT DISTINCT Breed FROM Animal WHERE Animal_Type = 'Cat'")
+    breeds = cursor.fetchall()  # Returns a list of tuples [(breed1,), (breed2,)]
+    breed_list = [breed[0] for breed in breeds]  # Flatten to a list [breed1, breed2, ...]
+
+    # Get the selected breed from query parameters
+    selected_breed = request.args.get('breed')
+
+    if selected_breed:
+        # Filter cats by selected breed
+        query = """
+        SELECT Image_Path, Name, Age, Breed, Description, Animal_ID 
+        FROM Animal 
+        WHERE Animal_Type = 'Cat' AND Breed = %s
+        """
+        cursor.execute(query, (selected_breed,))
+    else:
+        # Fetch all cats if no breed is selected
+        query = """
+        SELECT Image_Path, Name, Age, Breed, Description, Animal_ID 
+        FROM Animal 
+        WHERE Animal_Type = 'Cat'
+        """
+        cursor.execute(query)
+
+    catlist = cursor.fetchall()  # Fetch the cats based on the query
+    cursor.close()
+
+    return render_template("CatAdoption.html", catlist=catlist, breed_list=breed_list, selected_breed=selected_breed)
+ # Ensure 'CatAdoption.html' exists in the 'templates' folder
+@app.route('/catadoptionform', methods=['GET', 'POST'])
 def catadoptionform():
-    return render_template('CatAdoptionForm.html')  # Ensure 'CatAdoptionForm.html' exists in the 'templates' folder
+    dbconn = mysql.connection
+    cursor = dbconn.cursor()
+
+    # Get cat_id from query parameters
+    cat_id = request.args.get('cat_id')
+
+    # Fetch the specific cat's name
+    cat_name = None
+    if cat_id:
+        cursor.execute("SELECT Name FROM Animal WHERE Animal_ID = %s", (cat_id,))
+        cat = cursor.fetchone()
+        if cat:
+            cat_name = cat[0]  # Extract the cat's name
+
+    if request.method == "POST":
+        # Retrieve form data
+        aname = request.form.get('adopter_name')
+        aemail = request.form.get('adopter_email')
+        aph = request.form.get('adopter_phone')
+        address = request.form.get('adopter_address')
+        pet = request.form.get('pet_type')
+        areason = request.form.get('reason')
+
+        # Insert data into the database
+        query = """
+        INSERT INTO catadoptform(name, email, phone_number, pet_type, reason, address) 
+        VALUES (%s, %s, %s, %s, %s, %s)
+        """
+        try:
+            cursor.execute(query, (aname, aemail, aph, pet, areason, address))
+            dbconn.commit()
+            return render_template("CatAdoptionForm.html", success=True, cat_name=cat_name)
+        except Exception as e:
+            dbconn.rollback()
+            print(f"Error: {e}")
+            return render_template("CatAdoptionForm.html", success=False, error="Failed to submit your application.", cat_name=cat_name)
+
+    # Render the form page with the selected cat's name
+    return render_template('CatAdoptionForm.html', cat_name=cat_name)
+
 
 
 @app.route("/hamsteradoption")
