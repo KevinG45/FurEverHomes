@@ -420,60 +420,58 @@ body {
   // Reset forms on load
   window.onload = resetForms;
   function validateSignupForm(event) {
-        const name = document.querySelector('[name="name"]').value.trim();
-        const email = document.querySelector('[name="email"]').value.trim();
-        const phone = document.querySelector('[name="phone"]').value.trim();
-        const password = document.querySelector('[name="password"]').value.trim();
-        const confirmPassword = document.querySelector('[name="confirm_password"]').value.trim();
+    const name = document.querySelector('[name="name"]').value.trim();
+    const email = document.querySelector('[name="email"]').value.trim();
+    const phone = document.querySelector('[name="phone"]').value.trim();
+    const password = document.querySelector('[name="password"]').value.trim();
+    const confirmPassword = document.querySelector('[name="confirm_password"]').value.trim();
 
-        if (!name || !email ||!phone|| !password || !confirmPassword) {
-            alert('Please fill in all fields.');
-            return false;
-        }
-        if (!/^[a-zA-Z]+$/.test(name)) {
-            alert('Name must contain only alphabets.');
-            return false;
-        }
-        if (!/\S+@\S+\.\S+/.test(email)) {
-            alert('Please enter a valid email address.');
-            return false;
-        }
-        if (!/^\d{10}$/.test(phone)) {
-            alert('Please enter a valid phone number.');
-            return false;
-        }
-        if (password.length < 6) {
-            alert('Password must be at least 6 characters long.');
-            return false;
-        }
-        if (password !== confirmPassword) {
-            alert('Passwords do not match.');
-            return false;
-        }
-        // Here you would typically check against the database
-        return true;
+    if (!name || !email || !phone || !password || !confirmPassword) {
+        alert('Please fill in all fields.');
+        return false;
     }
-
-    function validateChangePasswordForm(event) {
-        const email = document.querySelector('[name="email"]').value.trim();
-        const newPassword = document.querySelector('[name="new_password"]').value.trim();
-        const confirmPassword = document.querySelector('[name="confirm_password"]').value.trim();
-
-        if (!email || !newPassword || !confirmPassword) {
-            alert('Please fill in all fields.');
-            return false;
-        }
-        // Here you would typically check if the email exists in the database
-        if (newPassword.length < 6) {
-            alert('New password must be at least 6 characters long.');
-            return false;
-        }
-        if (newPassword !== confirmPassword) {
-            alert('New passwords do not match.');
-            return false;
-        }
-        return true;
+    if (!/^[a-zA-Z\s]+$/.test(name)) {
+        alert('Name must contain only alphabets.');
+        return false;
     }
+    if (!/\S+@\S+\.\S+/.test(email)) {
+        alert('Please enter a valid email address.');
+        return false;
+    }
+    if (!/^\d{10}$/.test(phone)) {
+        alert('Please enter a valid phone number.');
+        return false;
+    }
+    if (password.length < 6) {
+        alert('Password must be at least 6 characters long.');
+        return false;
+    }
+    if (password !== confirmPassword) {
+        alert('Passwords do not match.');
+        return false;
+    }
+    return true; // All validations passed
+}
+
+function validateChangePasswordForm(event) {
+    const email = document.querySelector('[name="email"]').value.trim();
+    const newPassword = document.querySelector('[name="new_password"]').value.trim();
+    const confirmPassword = document.querySelector('[name="confirm_password"]').value.trim();
+
+    if (!email || !newPassword || !confirmPassword) {
+        alert('Please fill in all fields.');
+        return false;
+    }
+    if (newPassword.length < 6) {
+        alert('New password must be at least 6 characters long.');
+        return false;
+    }
+    if (newPassword !== confirmPassword) {
+        alert('New passwords do not match.');
+        return false;
+    }
+    return true; // All validations passed
+}
  
 
 
