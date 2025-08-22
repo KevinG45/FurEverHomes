@@ -1,0 +1,12 @@
+streamlit
+pandas
+numpy
+matplotlib
+seaborn
+scikit-learn
+tensorflow
+plotly
+xarray
+netcdf4
+tqdm
+requests
